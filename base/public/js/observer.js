@@ -7,5 +7,10 @@ class Observable {
     constructor() {
         this.observers = new Array();
     }
+    notifyDelete(log) {
+        this.observers.forEach(value => {
+            value.notifyDelete(log);
+        });
+    }
 }
 //# sourceMappingURL=observer.js.map

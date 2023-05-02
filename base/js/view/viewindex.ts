@@ -3,6 +3,10 @@ class ViewIndex implements IObserver{
     private matieres : HTMLSelectElement;
     private filieres : HTMLSelectElement;
     private logiciels : HTMLDivElement;
+    private showLogiciel : HTMLDivElement;
+    private deleteLink : HTMLLabelElement;
+
+    private logicielCourant : Logiciel;
 
     private tousLogiciels: HTMLInputElement;
     private logicielsFiliere: HTMLInputElement;
@@ -10,10 +14,17 @@ class ViewIndex implements IObserver{
 
     constructor(cont : Controler){
         this.controler = cont;
+        cont.register(this);
 
         this.matieres = document.getElementById("courses") as HTMLSelectElement;
         this.filieres = document.getElementById("years") as HTMLSelectElement;
         this.logiciels = document.getElementById("listSofts") as HTMLDivElement;
+        this.showLogiciel = document.getElementById("software") as HTMLDivElement;
+        this.deleteLink = document.getElementById("delete") as HTMLLabelElement;
+
+        this.deleteLink.addEventListener("click",() => this.supprimer());
+
+        this.logicielCourant = null;
 
         this.tousLogiciels = document.getElementById("all") as HTMLInputElement;
         this.logicielsFiliere = document.getElementById("year") as HTMLInputElement;
@@ -26,6 +37,12 @@ class ViewIndex implements IObserver{
         this.fillMatieres();
         this.fillFiliere();
         
+    }
+    notifyDelete(log: Logiciel) {
+        this.controler.deleteLogiciel(log.ID);
+        alert("Le logiciel "+log.nom+" est supprimé");
+        this.showLogiciel.replaceChildren();
+        this.filtrer();
     }
 
     private async filtrer() {
@@ -103,6 +120,8 @@ class ViewIndex implements IObserver{
                         elt.classList.remove("selected");
                     })
                     item.classList.add("selected");
+                    this.displayLogiciel(logiciel);
+                    this.logicielCourant = logiciel;
                 })
 
                 this.logiciels.appendChild(item);
@@ -111,5 +130,40 @@ class ViewIndex implements IObserver{
         catch (e) {
             alert(e.message);
         }
+    }
+
+    private displayLogiciel(logiciel : Logiciel){
+        this.showLogiciel.replaceChildren();
+        let name : HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+        name.id = "softName";
+        name.innerHTML = logiciel.nomversion;
+        let type : HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+        type.innerHTML = logiciel.type;
+        type.id = "softType";
+        let image : HTMLImageElement = document.createElement("img") as HTMLImageElement;
+        image.src = logiciel.urlImage;
+        image.id = "ImgSoft";
+        image.alt = "Image de "+logiciel.nom;
+        let description: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
+        description.innerHTML = logiciel.comment;
+        description.id = "comment";
+        let lienTuto = document.createElement("a");
+        lienTuto.title = "Lien vers le tutoriel d'installation";
+        lienTuto.href = logiciel.urlTuto;
+        let lienSetup = document.createElement("a");
+        lienSetup.title = "Lien vers l'archive d'installation";
+        lienSetup.href = logiciel.urlSetup;
+
+        this.showLogiciel.append(name);
+        this.showLogiciel.append(type);
+        this.showLogiciel.append(image);
+        this.showLogiciel.append(description);
+        this.showLogiciel.append(lienTuto);
+        this.showLogiciel.append(lienSetup);
+        
+    }
+
+    private supprimer(){
+        this.controler.notifyDelete(this.logicielCourant);
     }
 }

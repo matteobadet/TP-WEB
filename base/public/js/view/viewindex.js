@@ -10,9 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 class ViewIndex {
     constructor(cont) {
         this.controler = cont;
+        cont.register(this);
         this.matieres = document.getElementById("courses");
         this.filieres = document.getElementById("years");
         this.logiciels = document.getElementById("listSofts");
+        this.showLogiciel = document.getElementById("software");
+        this.deleteLink = document.getElementById("delete");
+        this.deleteLink.addEventListener("click", () => this.supprimer());
+        this.logicielCourant = null;
         this.tousLogiciels = document.getElementById("all");
         this.logicielsFiliere = document.getElementById("year");
         this.logicielsMatiere = document.getElementById("course");
@@ -20,6 +25,12 @@ class ViewIndex {
         document.getElementById("filterBtn").addEventListener("click", () => this.filtrer());
         this.fillMatieres();
         this.fillFiliere();
+    }
+    notifyDelete(log) {
+        this.controler.deleteLogiciel(log.ID);
+        alert("Le logiciel " + log.nom + " est supprimé");
+        this.showLogiciel.replaceChildren();
+        this.filtrer();
     }
     filtrer() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -99,6 +110,8 @@ class ViewIndex {
                         elt.classList.remove("selected");
                     });
                     item.classList.add("selected");
+                    this.displayLogiciel(logiciel);
+                    this.logicielCourant = logiciel;
                 });
                 this.logiciels.appendChild(item);
             });
@@ -106,6 +119,37 @@ class ViewIndex {
         catch (e) {
             alert(e.message);
         }
+    }
+    displayLogiciel(logiciel) {
+        this.showLogiciel.replaceChildren();
+        let name = document.createElement("p");
+        name.id = "softName";
+        name.innerHTML = logiciel.nomversion;
+        let type = document.createElement("p");
+        type.innerHTML = logiciel.type;
+        type.id = "softType";
+        let image = document.createElement("img");
+        image.src = logiciel.urlImage;
+        image.id = "ImgSoft";
+        image.alt = "Image de " + logiciel.nom;
+        let description = document.createElement("p");
+        description.innerHTML = logiciel.comment;
+        description.id = "comment";
+        let lienTuto = document.createElement("a");
+        lienTuto.title = "Lien vers le tutoriel d'installation";
+        lienTuto.href = logiciel.urlTuto;
+        let lienSetup = document.createElement("a");
+        lienSetup.title = "Lien vers l'archive d'installation";
+        lienSetup.href = logiciel.urlSetup;
+        this.showLogiciel.append(name);
+        this.showLogiciel.append(type);
+        this.showLogiciel.append(image);
+        this.showLogiciel.append(description);
+        this.showLogiciel.append(lienTuto);
+        this.showLogiciel.append(lienSetup);
+    }
+    supprimer() {
+        this.controler.notifyDelete(this.logicielCourant);
     }
 }
 //# sourceMappingURL=viewindex.js.map

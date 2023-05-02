@@ -45,5 +45,8 @@ class LogicielDAO{
             throw new Error("Unable to get from server");
         return logiciels;
     }
+    public async Delete(id_to_remove : Int32Array){
+        let response = await fetch("php/logicielDAO.php?id_to_remove="+id_to_remove);
+    }
 
 }

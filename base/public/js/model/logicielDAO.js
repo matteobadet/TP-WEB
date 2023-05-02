@@ -58,5 +58,10 @@ class LogicielDAO {
             return logiciels;
         });
     }
+    Delete(id_to_remove) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield fetch("php/logicielDAO.php?id_to_remove=" + id_to_remove);
+        });
+    }
 }
 //# sourceMappingURL=logicielDAO.js.map

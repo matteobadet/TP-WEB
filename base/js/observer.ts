@@ -10,4 +10,10 @@ class Observable{
     constructor(){
         this.observers = new Array<IObserver>();
     }
+
+    public notifyDelete(log: Logiciel){
+        this.observers.forEach(value => {
+            value.notifyDelete(log);
+        })
+    }
 }
