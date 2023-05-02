@@ -16,6 +16,9 @@ class LogicielDAO{
     public function Delete(int $id){
         $this->bdd->queryAll("DELETE FROM Logiciel WHERE ID=?",array($id));
     }
+    public function GetLogicielByID(int $id){
+        return $this->bdd->queryAll("SELECT * FROM Logiciel WHERE ID=?",array($id));
+    }
 }
 
 $bdd = new Database();
@@ -26,6 +29,9 @@ if(isset($_GET['id_filiere'])){
 } else 
 if(isset($_GET['id_to_remove'])){
     $dao->Delete($_GET['id_to_remove']);
+} else
+if(isset($_GET['id_to_edit'])){
+    echo json_encode($dao->GetLogicielByID($_GET['id_to_edit']));
 } else
 {
     echo json_encode($dao->GetAll());

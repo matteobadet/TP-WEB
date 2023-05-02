@@ -5,6 +5,7 @@ class ViewIndex implements IObserver{
     private logiciels : HTMLDivElement;
     private showLogiciel : HTMLDivElement;
     private deleteLink : HTMLLabelElement;
+    private editLink : HTMLLabelElement;
 
     private logicielCourant : Logiciel;
 
@@ -21,8 +22,10 @@ class ViewIndex implements IObserver{
         this.logiciels = document.getElementById("listSofts") as HTMLDivElement;
         this.showLogiciel = document.getElementById("software") as HTMLDivElement;
         this.deleteLink = document.getElementById("delete") as HTMLLabelElement;
+        this.editLink = document.getElementById("modify") as HTMLLabelElement;
 
         this.deleteLink.addEventListener("click",() => this.supprimer());
+        this.editLink.addEventListener("click", () => this.editer());
 
         this.logicielCourant = null;
 
@@ -38,6 +41,7 @@ class ViewIndex implements IObserver{
         this.fillFiliere();
         
     }
+
     notifyDelete(log: Logiciel) {
         this.controler.deleteLogiciel(log.ID);
         alert("Le logiciel "+log.nom+" est supprimé");
@@ -165,5 +169,8 @@ class ViewIndex implements IObserver{
 
     private supprimer(){
         this.controler.notifyDelete(this.logicielCourant);
+    }
+    private editer(){
+        window.location.href = "editor.html?idLogiciel="+this.logicielCourant.ID;
     }
 }

@@ -16,7 +16,9 @@ class ViewIndex {
         this.logiciels = document.getElementById("listSofts");
         this.showLogiciel = document.getElementById("software");
         this.deleteLink = document.getElementById("delete");
+        this.editLink = document.getElementById("modify");
         this.deleteLink.addEventListener("click", () => this.supprimer());
+        this.editLink.addEventListener("click", () => this.editer());
         this.logicielCourant = null;
         this.tousLogiciels = document.getElementById("all");
         this.logicielsFiliere = document.getElementById("year");
@@ -150,6 +152,9 @@ class ViewIndex {
     }
     supprimer() {
         this.controler.notifyDelete(this.logicielCourant);
+    }
+    editer() {
+        window.location.href = "editor.html?idLogiciel=" + this.logicielCourant.ID;
     }
 }
 //# sourceMappingURL=viewindex.js.map
