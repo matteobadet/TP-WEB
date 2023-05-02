@@ -1,0 +1,7 @@
+﻿#enter{
+    display:flex;
+    justify-content:space-around;
+    margin:50px;
+    flex:1;
+    align-content:safe center;
+}

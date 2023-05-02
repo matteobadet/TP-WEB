@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TP R4.10</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/accueil.css" rel="stylesheet" />
+    
+</head>
+<body>        
+    <main>
+        <div class="side">
+            <h2>Liste des logiciels</h2>
+            <div class="item">
+                <input type="radio" name="filter" value="all" id="all" checked />
+                <label for="all">Tout</label>
+            </div>
+            <div class="item">
+                <input type="radio" name="filter" value="year" id="year" />
+                <label for="year">Filtrer par filière</label>
+                <select id="years">
+                </select>
+            </div>
+            <div class="item">
+                <input type="radio" name="filter" value="course" id="course" />
+                <label for="course">Filtrer par matière</label>
+                <select id="courses">
+                </select>
+            </div>
+            <div class="item">
+                <input type="radio" name="filter" value="name" id="name" />
+                <label for="name">Filtrer par nom</label>
+                <input type="text" id="filtrer" />
+            </div>
+            <div class="centerContent">
+                <button id="filterBtn" >Filtrer</button>
+            </div>
+            <div class="list" id="listSofts">
+            </div>
+            <div class="teacher centerContent hide">
+                <label id="add" class="link">Proposer un logiciel</label>
+            </div>
+        </div>
+        <div class="content">
+            <div id="software" class="software">                
+            </div>
+
+            <div id="actions" class="fillContent hide">
+                <label id="modify" class="admin link" >Modifier la fiche</label>
+                <label class="admin link" id="delete">Supprimer la fiche</label>
+            </div>
+        </div>
+        
+    </main>
+    <script src="./public/js/iobserver.js"></script>
+    <script src="./public/js/observer.js"></script>
+    <script src="./public/js/controler/controler.js"></script>
+    <script src="./public/js/view/viewindex.js"></script>
+    <script src="./public/js/main.js"></script>
+    <script src="./public/js/model/filiereDAO.js"></script>
+    <script src="./public/js/model/filieres.js"></script>
+    <script src="./public/js/model/matiereDAO.js"></script>
+    <script src="./public/js/model/matiere.js"></script>
+    <script src="./public/js/model/logicielDAO.js"></script>
+    <script src="./public/js/model/logiciel.js"></script>
+</body>
+</html>

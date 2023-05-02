@@ -1,0 +1,22 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format// CTRL Shift B / MDP : u0v3iscv grp-170
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start chrome",
+            "type": "shell",
+            "command": "chrome",
+            "windows": {
+                "command": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+            },
+            "args": [
+                "http://grp-170.iq.iut21.u-bourgogne.fr/vscode/TPcomplémentweb/${relativeFileDirname}/${fileBasename}"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
