@@ -18,7 +18,7 @@ class ViewDetails{
         });
         this.buttonValider.addEventListener('click',() =>{
             this.validate();
-            //window.history.back();
+            window.history.back();
         });
 
         this.saisiNom = document.getElementById("name") as HTMLInputElement;
@@ -76,7 +76,6 @@ class ViewDetails{
                 listeFiliereLog.push((item as HTMLInputElement).value);
             }
         }
-        console.log(listeFiliereLog);
         let logicielDAO : LogicielDAO = new LogicielDAO();
         let filiereDAO : FiliereDAO = new FiliereDAO();
         logicielDAO.Update(log);
