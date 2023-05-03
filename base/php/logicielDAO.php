@@ -19,6 +19,10 @@ class LogicielDAO{
     public function GetLogicielByID(int $id){
         return $this->bdd->queryAll("SELECT * FROM Logiciel WHERE ID=?",array($id));
     }
+    public function UpdateLogiciel(int $id,string $nom,string $version,string $type,bool $obsolete){
+        $this->bdd->queryAll("UPDATE Logiciel SET nom=?,version=?,type=?,obsolete=? WHERE id=?",array($nom,$version,$type,$obsolete,$id));
+        return true;
+    }
 }
 
 $bdd = new Database();
@@ -33,7 +37,11 @@ if(isset($_GET['id_to_remove'])){
 if(isset($_GET['id_to_edit'])){
     echo json_encode($dao->GetLogicielByID($_GET['id_to_edit']));
 } else
+if(isset($_POST['id']) && isset($_POST['nom']) && isset($_POST['version']) && isset($_POST['type']) && isset($_POST['obsolete']))
 {
+    $dao->UpdateLogiciel($_POST['id'],$_POST['nom'],$_POST['version'],$_POST['type'],$_POST['obsolete']);
+    echo json_encode(true);
+} else {
     echo json_encode($dao->GetAll());
 }
 

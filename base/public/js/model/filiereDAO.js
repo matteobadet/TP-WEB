@@ -41,8 +41,18 @@ class FiliereDAO {
             }
             else
                 throw new Error("Unable to get from server");
-            console.log(filieres);
             return filieres;
+        });
+    }
+    UpdateFiliereByLogiciel(id, array) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let datas = new FormData();
+            datas.append("array", array);
+            let response = yield fetch("php/filieres.php?id_update_filiere=" + id, {
+                method: 'POST',
+                body: datas
+            });
+            console.log(response.ok);
         });
     }
 }

@@ -88,5 +88,19 @@ class LogicielDAO {
             return logiciels[0];
         });
     }
+    Update(log) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let datas = new FormData();
+            datas.append("id", log.ID.toString());
+            datas.append("nom", log.nom);
+            datas.append("version", log.version);
+            datas.append("type", log.type);
+            datas.append("obsolete", String(log.obsolete));
+            let response = fetch("php/logicielDAO.php", {
+                method: 'POST',
+                body: datas
+            });
+        });
+    }
 }
 //# sourceMappingURL=logicielDAO.js.map

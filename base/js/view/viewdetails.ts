@@ -12,8 +12,15 @@ class ViewDetails{
     constructor(){
         this.buttonAnnuler = document.getElementById("cancel") as HTMLButtonElement;
         this.buttonValider = document.getElementById("ok") as HTMLButtonElement;
-        this.buttonAnnuler.click = () => window.history.back();
-        this.buttonAnnuler.click = () => this.validate();
+        
+        this.buttonAnnuler.addEventListener('click', () => {
+            window.history.back();
+        });
+        this.buttonValider.addEventListener('click',() =>{
+            this.validate();
+            //window.history.back();
+        });
+
         this.saisiNom = document.getElementById("name") as HTMLInputElement;
         this.saisiType = document.getElementById("type") as HTMLInputElement;
         this.saisiVersion = document.getElementById("version") as HTMLInputElement;
@@ -40,6 +47,7 @@ class ViewDetails{
             label.innerHTML = element.getName();
             let input = document.createElement("input");
             input.type = "checkbox";
+            input.className = "checkBoxTKT";
             input.value = element.getID().toString();
             filiereLogicielCourant.forEach(elementFi => {
                 if(elementFi.getID() == element.getID()){
@@ -56,6 +64,23 @@ class ViewDetails{
     private validate(){
         let log : Logiciel = new Logiciel();
         log.ID = this.logicielCourant.ID;
+        log.nom = this.saisiNom.value;
+        log.version = this.saisiVersion.value;
+        log.type = this.saisiType.value;
+        log.obsolete = this.saisiObsolete.checked;
+        
+        let listeFiliereLog = [];
+        let listeInputCheckBox = document.getElementsByClassName("checkBoxTKT");
+        for(let item of listeInputCheckBox){
+            if((item as HTMLInputElement).checked){
+                listeFiliereLog.push((item as HTMLInputElement).value);
+            }
+        }
+        console.log(listeFiliereLog);
+        let logicielDAO : LogicielDAO = new LogicielDAO();
+        let filiereDAO : FiliereDAO = new FiliereDAO();
+        logicielDAO.Update(log);
+        filiereDAO.UpdateFiliereByLogiciel(this.logicielCourant.ID,listeFiliereLog);
         
     }
 }

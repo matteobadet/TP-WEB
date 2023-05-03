@@ -29,8 +29,16 @@ class FiliereDAO{
         }
         else
             throw new Error("Unable to get from server");
-        console.log(filieres);
         return filieres;
     }
+    public async UpdateFiliereByLogiciel(id : Int32Array,array){
+        let datas = new FormData();
+        datas.append("array",array);
+        let response = await fetch("php/filieres.php?id_update_filiere="+id,{
+            method: 'POST',
+            body: datas
+        });
+        console.log(response.ok);
+    } 
 
 }

@@ -10,7 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 class ViewDetails {
     constructor() {
         this.buttonAnnuler = document.getElementById("cancel");
-        this.buttonAnnuler.click = () => window.history.back();
+        this.buttonValider = document.getElementById("ok");
+        this.buttonAnnuler.addEventListener('click', () => {
+            window.history.back();
+        });
+        this.buttonValider.addEventListener('click', () => {
+            this.validate();
+        });
         this.saisiNom = document.getElementById("name");
         this.saisiType = document.getElementById("type");
         this.saisiVersion = document.getElementById("version");
@@ -35,6 +41,7 @@ class ViewDetails {
                 label.innerHTML = element.getName();
                 let input = document.createElement("input");
                 input.type = "checkbox";
+                input.className = "checkBoxTKT";
                 input.value = element.getID().toString();
                 filiereLogicielCourant.forEach(elementFi => {
                     if (elementFi.getID() == element.getID()) {
@@ -46,6 +53,26 @@ class ViewDetails {
                 this.saisiFiliereDiv.appendChild(div);
             });
         });
+    }
+    validate() {
+        let log = new Logiciel();
+        log.ID = this.logicielCourant.ID;
+        log.nom = this.saisiNom.value;
+        log.version = this.saisiVersion.value;
+        log.type = this.saisiType.value;
+        log.obsolete = this.saisiObsolete.checked;
+        let listeFiliereLog = [];
+        let listeInputCheckBox = document.getElementsByClassName("checkBoxTKT");
+        for (let item of listeInputCheckBox) {
+            if (item.checked) {
+                listeFiliereLog.push(item.value);
+            }
+        }
+        console.log(listeFiliereLog);
+        let logicielDAO = new LogicielDAO();
+        let filiereDAO = new FiliereDAO();
+        logicielDAO.Update(log);
+        filiereDAO.UpdateFiliereByLogiciel(this.logicielCourant.ID, listeFiliereLog);
     }
 }
 //# sourceMappingURL=viewdetails.js.map
