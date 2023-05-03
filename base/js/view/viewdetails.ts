@@ -2,6 +2,7 @@ class ViewDetails{
     private logicielCourant : Logiciel;
 
     private buttonAnnuler : HTMLButtonElement;
+    private buttonValider : HTMLButtonElement;
     private saisiNom : HTMLInputElement;
     private saisiType : HTMLInputElement;
     private saisiVersion : HTMLInputElement;
@@ -10,7 +11,9 @@ class ViewDetails{
     
     constructor(){
         this.buttonAnnuler = document.getElementById("cancel") as HTMLButtonElement;
+        this.buttonValider = document.getElementById("ok") as HTMLButtonElement;
         this.buttonAnnuler.click = () => window.history.back();
+        this.buttonAnnuler.click = () => this.validate();
         this.saisiNom = document.getElementById("name") as HTMLInputElement;
         this.saisiType = document.getElementById("type") as HTMLInputElement;
         this.saisiVersion = document.getElementById("version") as HTMLInputElement;
@@ -49,5 +52,10 @@ class ViewDetails{
         });
 
 
+    }
+    private validate(){
+        let log : Logiciel = new Logiciel();
+        log.ID = this.logicielCourant.ID;
+        
     }
 }
