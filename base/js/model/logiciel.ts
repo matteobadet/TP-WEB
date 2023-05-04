@@ -41,6 +41,13 @@ class Logiciel{
     public set urlTuto(value: string) {
         this._urlTuto = value;
     }
+    private _urlPort:string;
+    public get urlPort():string{
+        return this._urlPort;
+    }
+    public set urlPort(value: string){
+        this._urlPort = value;
+    }
     private _comment: string;
     public get comment(): string {
         return this._comment;

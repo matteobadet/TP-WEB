@@ -61,6 +61,7 @@ class LogicielDAO{
                 logiciel.urlSetup = obj.urlSetup;
                 logiciel.urlImage = obj.urlImage;
                 logiciel.urlTuto = obj.urlTuto;
+                logiciel.urlPort = obj.urlPort;
                 logiciel.comment = obj.comment;
                 logiciel.type = obj.type;
                 logiciel.obsolete = obj.obsolete;
@@ -79,6 +80,10 @@ class LogicielDAO{
         datas.append("version",log.version);
         datas.append("type",log.type);
         datas.append("obsolete",String(log.obsolete));
+        datas.append("urlSetup",log.urlSetup);
+        datas.append("urlTuto",log.urlTuto);
+        datas.append("urlPort",log.urlPort);
+        datas.append("urlImage",log.urlImage);
         let response = fetch("php/logicielDAO.php",{
             method: 'POST',
             body: datas

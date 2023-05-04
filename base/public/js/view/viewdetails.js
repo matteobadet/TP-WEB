@@ -16,6 +16,10 @@ class ViewDetails {
         });
         this.buttonValider.addEventListener('click', () => {
             this.validate();
+            this.upload(this.saisiFichierArchive, this.uploadFichierArchive);
+            this.upload(this.saisiFichierTuto, this.uploadFichierTuto);
+            this.upload(this.saisiFichierPortable, this.uploadFichierPortable);
+            this.upload(this.saisiFichierImgLogo, this.uploadFichierImgLogo);
             window.history.back();
         });
         this.saisiNom = document.getElementById("name");
@@ -23,6 +27,14 @@ class ViewDetails {
         this.saisiVersion = document.getElementById("version");
         this.saisiObsolete = document.getElementById("obsolete");
         this.saisiFiliereDiv = document.getElementById("years");
+        this.saisiFichierArchive = document.getElementById("urlSetup");
+        this.saisiFichierTuto = document.getElementById("urlTuto");
+        this.saisiFichierPortable = document.getElementById("urlPort");
+        this.saisiFichierImgLogo = document.getElementById("urlImage");
+        this.uploadFichierArchive = document.getElementById("rangeSetup");
+        this.uploadFichierTuto = document.getElementById("rangeTuto");
+        this.uploadFichierPortable = document.getElementById("rangePort");
+        this.uploadFichierImgLogo = document.getElementById("rangeImage");
     }
     InitialiseLogiciel(idLogiciel) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -69,10 +81,47 @@ class ViewDetails {
                 listeFiliereLog.push(item.value);
             }
         }
+        log.urlSetup = this.getFileName(this.saisiFichierArchive);
+        log.urlTuto = this.getFileName(this.saisiFichierTuto);
+        log.urlImage = this.getFileName(this.saisiFichierImgLogo);
+        log.urlPort = this.getFileName(this.saisiFichierPortable);
         let logicielDAO = new LogicielDAO();
         let filiereDAO = new FiliereDAO();
         logicielDAO.Update(log);
         filiereDAO.UpdateFiliereByLogiciel(this.logicielCourant.ID, listeFiliereLog);
+    }
+    upload(input, progressBar) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let files = input.files;
+            if (files.length > 0) {
+                let formData = new FormData();
+                formData.append("file", files[0]);
+                const xhr = new XMLHttpRequest();
+                progressBar.classList.remove("hide");
+                yield new Promise((resolve) => {
+                    xhr.upload.addEventListener("progress", (evt) => {
+                        if (evt.lengthComputable) {
+                            progressBar.value = String(((evt.loaded / evt.total) * 100));
+                        }
+                    }, false);
+                    xhr.addEventListener("loadend", () => {
+                        resolve(xhr.readyState === 4 && xhr.status === 200);
+                    });
+                    xhr.open("POST", "php/upload.php", true);
+                    xhr.send(formData);
+                });
+                progressBar.classList.add("hide");
+            }
+        });
+    }
+    getFileName(input) {
+        let files = input.files;
+        let file = "";
+        if (files.length > 0) {
+            let url = files[0].name;
+            file = "files/" + url;
+        }
+        return file;
     }
 }
 //# sourceMappingURL=viewdetails.js.map

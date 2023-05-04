@@ -35,6 +35,12 @@ class Logiciel {
     set urlTuto(value) {
         this._urlTuto = value;
     }
+    get urlPort() {
+        return this._urlPort;
+    }
+    set urlPort(value) {
+        this._urlPort = value;
+    }
     get comment() {
         return this._comment;
     }
