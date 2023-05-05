@@ -7,6 +7,7 @@ class MatiereDAO{
     function __construct(Database $bdd){
         $this->bdd = $bdd;
     }
+    //Ce code renvoie la liste des matières
     public function GetMatieres() : array{
         return $this->bdd->queryAll("SELECT ID,nom,code FROM Matiere",array());
     }

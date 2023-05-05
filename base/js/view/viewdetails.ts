@@ -27,11 +27,11 @@ class ViewDetails{
             window.history.back();
         });
         this.buttonValider.addEventListener('click',() =>{
-            this.validate();
             this.upload(this.saisiFichierArchive,this.uploadFichierArchive);
             this.upload(this.saisiFichierTuto,this.uploadFichierTuto);
             this.upload(this.saisiFichierPortable,this.uploadFichierPortable);
             this.upload(this.saisiFichierImgLogo,this.uploadFichierImgLogo);
+            this.validate();
             window.history.back();
         });
 
@@ -52,6 +52,10 @@ class ViewDetails{
         this.uploadFichierImgLogo = document.getElementById("rangeImage") as HTMLInputElement;
     }
 
+    /**
+     * Initialisation du logiciel courant
+     * @param idLogiciel id du logiciel a modifié
+     */
     public async InitialiseLogiciel(idLogiciel : number){
         let logicielDAO : LogicielDAO = new LogicielDAO();
         let filiereDAO : FiliereDAO = new FiliereDAO();
@@ -85,6 +89,9 @@ class ViewDetails{
 
 
     }
+    /**
+     * Fonction appellé pour valider les modifications sur uune application
+     */
     private validate(){
         let log : Logiciel = new Logiciel();
         log.ID = this.logicielCourant.ID;
@@ -112,7 +119,11 @@ class ViewDetails{
         filiereDAO.UpdateFiliereByLogiciel(this.logicielCourant.ID,listeFiliereLog);
         
     }
-
+    /**
+     * fonction qui upload le fichier sur le serveur
+     * @param input input du fichier
+     * @param progressBar input de la progression de l'upload
+     */
     private async upload(input: HTMLInputElement,progressBar: HTMLInputElement) {
         // envoie au serveur le fichier contenu dans la zone
         let files = input.files;
@@ -137,6 +148,11 @@ class ViewDetails{
         progressBar.classList.add("hide");
         }
     }
+    /**
+     * fonction qui donne le nom du fichier
+     * @param input input du fichier
+     * @returns le nom du fichier
+     */
     private getFileName(input: HTMLInputElement): string {
         let files = input.files;
         let file = "";

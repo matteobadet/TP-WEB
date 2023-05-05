@@ -19,13 +19,15 @@ class LogicielDAO {
                     logiciel.ID = obj.ID;
                     logiciel.nom = obj.nom;
                     logiciel.version = obj.version;
-                    logiciel.urlSetup = obj.urlSetup;
+                    logiciel.urlSetup = obj.urlsetup;
+                    logiciel.urlPort = obj.urlPort;
                     logiciel.urlImage = obj.urlImage;
-                    logiciel.urlTuto = obj.urlTuto;
+                    logiciel.urlTuto = obj.urltuto;
                     logiciel.comment = obj.comment;
                     logiciel.type = obj.type;
                     logiciel.obsolete = obj.obsolete;
                     logiciels.push(logiciel);
+                    console.log(logiciel);
                 });
             }
             else
@@ -44,9 +46,10 @@ class LogicielDAO {
                     logiciel.ID = obj.ID;
                     logiciel.nom = obj.nom;
                     logiciel.version = obj.version;
-                    logiciel.urlSetup = obj.urlSetup;
+                    logiciel.urlSetup = obj.urlsetup;
+                    logiciel.urlPort = obj.urlPort;
                     logiciel.urlImage = obj.urlImage;
-                    logiciel.urlTuto = obj.urlTuto;
+                    logiciel.urlTuto = obj.urltuto;
                     logiciel.comment = obj.comment;
                     logiciel.type = obj.type;
                     logiciel.obsolete = obj.obsolete;
@@ -74,10 +77,10 @@ class LogicielDAO {
                     logiciel.ID = obj.ID;
                     logiciel.nom = obj.nom;
                     logiciel.version = obj.version;
-                    logiciel.urlSetup = obj.urlSetup;
-                    logiciel.urlImage = obj.urlImage;
-                    logiciel.urlTuto = obj.urlTuto;
+                    logiciel.urlSetup = obj.urlsetup;
                     logiciel.urlPort = obj.urlPort;
+                    logiciel.urlImage = obj.urlImage;
+                    logiciel.urlTuto = obj.urltuto;
                     logiciel.comment = obj.comment;
                     logiciel.type = obj.type;
                     logiciel.obsolete = obj.obsolete;

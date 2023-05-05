@@ -41,14 +41,19 @@ class ViewIndex implements IObserver{
         this.fillFiliere();
         
     }
-
+    /**
+     * methode qui notify qu'un logiciel a été supprimer
+     * @param log logiciel
+     */
     notifyDelete(log: Logiciel) {
         this.controler.deleteLogiciel(log.ID);
         alert("Le logiciel "+log.nom+" est supprimé");
         this.showLogiciel.replaceChildren();
         this.filtrer();
     }
-
+    /**
+     * methode qui filtre l'affichage des logiciels
+     */
     private async filtrer() {
         if (this.tousLogiciels.checked) {
             await this.fillLogiciel();
@@ -64,7 +69,9 @@ class ViewIndex implements IObserver{
         }
     }
        
-
+    /**
+     * methode qui remplie les matières
+     */
     private async fillMatieres(){
         try {
             let dao = new MatiereDAO();
@@ -81,6 +88,9 @@ class ViewIndex implements IObserver{
             alert(e.message);
         }
     }
+    /**
+     * methode qui remplie les filières
+     */
     private async fillFiliere(){
         try {
             let dao = new FiliereDAO();
@@ -98,17 +108,27 @@ class ViewIndex implements IObserver{
         }
 
     }
+    /**
+     * methode qui remplie les logiciels
+     */
     private async fillLogiciel(){
         let dao = new LogicielDAO();
         let logiciels = await dao.getAll();
         this.drawLogiciels(logiciels);
     }
+    /**
+     * methode qui remplie les logiciels en fonction d'une filière
+     * @param id iid de la fiilière
+     */
     private async fillLogicielByFiliere(id : number){
         let dao = new LogicielDAO();
         let logiciels = await dao.getByFilliere(id);
         this.drawLogiciels(logiciels);
     }
-
+    /**
+     * methode qui remplie dans la page html
+     * @param logiciels liste de logiciel
+     */
     private drawLogiciels(logiciels : Array<Logiciel>){
         try {
             this.logiciels.replaceChildren();
@@ -135,41 +155,58 @@ class ViewIndex implements IObserver{
             alert(e.message);
         }
     }
-
+    /**
+     * methode qui affiche les spécificités d'un logiciel
+     * @param logiciel logiciel
+     */
     private displayLogiciel(logiciel : Logiciel){
+
         this.showLogiciel.replaceChildren();
         let name : HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
         name.id = "softName";
         name.innerHTML = logiciel.nomversion;
+        this.showLogiciel.append(name);
         let type : HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
         type.innerHTML = logiciel.type;
         type.id = "softType";
+        this.showLogiciel.append(type);
         let image : HTMLImageElement = document.createElement("img") as HTMLImageElement;
         image.src = logiciel.urlImage;
         image.id = "ImgSoft";
         image.alt = "Image de "+logiciel.nom;
+        this.showLogiciel.append(image);
         let description: HTMLParagraphElement = document.createElement("p") as HTMLParagraphElement;
         description.innerHTML = logiciel.comment;
         description.id = "comment";
-        let lienTuto = document.createElement("a");
-        lienTuto.title = "Lien vers le tutoriel d'installation";
-        lienTuto.href = logiciel.urlTuto;
-        let lienSetup = document.createElement("a");
-        lienSetup.title = "Lien vers l'archive d'installation";
-        lienSetup.href = logiciel.urlSetup;
-
-        this.showLogiciel.append(name);
-        this.showLogiciel.append(type);
-        this.showLogiciel.append(image);
         this.showLogiciel.append(description);
-        this.showLogiciel.append(lienTuto);
-        this.showLogiciel.append(lienSetup);
-        
+        if(logiciel.urlTuto != undefined){
+            let lienTuto = document.createElement("a");
+            lienTuto.innerHTML = "Lien vers le tutoriel d'installation";
+            lienTuto.href = logiciel.urlTuto;
+            this.showLogiciel.append(lienTuto);
+        }
+        if(logiciel.urlSetup != undefined){
+            let lienSetup = document.createElement("a");
+            lienSetup.innerHTML = "Lien vers l'archive d'installation";
+            lienSetup.href = logiciel.urlSetup;
+            this.showLogiciel.append(lienSetup);
+        }
+        if(logiciel.urlPort != undefined){
+            let lienPort = document.createElement("a");
+            lienPort.innerHTML = "Lien vers la version portable";
+            lienPort.href = logiciel.urlPort;
+            this.showLogiciel.append(lienPort);
+        }
     }
-
+    /**
+     * methode qui supprimer le logiciel courant
+     */
     private supprimer(){
         this.controler.notifyDelete(this.logicielCourant);
     }
+    /**
+     * methode qui edit le logiciel courant
+     */
     private editer(){
         window.location.href = "editor.html?idLogiciel="+this.logicielCourant.ID;
     }

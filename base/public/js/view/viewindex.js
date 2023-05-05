@@ -127,28 +127,38 @@ class ViewIndex {
         let name = document.createElement("p");
         name.id = "softName";
         name.innerHTML = logiciel.nomversion;
+        this.showLogiciel.append(name);
         let type = document.createElement("p");
         type.innerHTML = logiciel.type;
         type.id = "softType";
+        this.showLogiciel.append(type);
         let image = document.createElement("img");
         image.src = logiciel.urlImage;
         image.id = "ImgSoft";
         image.alt = "Image de " + logiciel.nom;
+        this.showLogiciel.append(image);
         let description = document.createElement("p");
         description.innerHTML = logiciel.comment;
         description.id = "comment";
-        let lienTuto = document.createElement("a");
-        lienTuto.title = "Lien vers le tutoriel d'installation";
-        lienTuto.href = logiciel.urlTuto;
-        let lienSetup = document.createElement("a");
-        lienSetup.title = "Lien vers l'archive d'installation";
-        lienSetup.href = logiciel.urlSetup;
-        this.showLogiciel.append(name);
-        this.showLogiciel.append(type);
-        this.showLogiciel.append(image);
         this.showLogiciel.append(description);
-        this.showLogiciel.append(lienTuto);
-        this.showLogiciel.append(lienSetup);
+        if (logiciel.urlTuto != undefined) {
+            let lienTuto = document.createElement("a");
+            lienTuto.innerHTML = "Lien vers le tutoriel d'installation";
+            lienTuto.href = logiciel.urlTuto;
+            this.showLogiciel.append(lienTuto);
+        }
+        if (logiciel.urlSetup != undefined) {
+            let lienSetup = document.createElement("a");
+            lienSetup.innerHTML = "Lien vers l'archive d'installation";
+            lienSetup.href = logiciel.urlSetup;
+            this.showLogiciel.append(lienSetup);
+        }
+        if (logiciel.urlPort != undefined) {
+            let lienPort = document.createElement("a");
+            lienPort.innerHTML = "Lien vers la version portable";
+            lienPort.href = logiciel.urlPort;
+            this.showLogiciel.append(lienPort);
+        }
     }
     supprimer() {
         this.controler.notifyDelete(this.logicielCourant);

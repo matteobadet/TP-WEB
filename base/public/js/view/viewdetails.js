@@ -15,11 +15,11 @@ class ViewDetails {
             window.history.back();
         });
         this.buttonValider.addEventListener('click', () => {
-            this.validate();
             this.upload(this.saisiFichierArchive, this.uploadFichierArchive);
             this.upload(this.saisiFichierTuto, this.uploadFichierTuto);
             this.upload(this.saisiFichierPortable, this.uploadFichierPortable);
             this.upload(this.saisiFichierImgLogo, this.uploadFichierImgLogo);
+            this.validate();
             window.history.back();
         });
         this.saisiNom = document.getElementById("name");

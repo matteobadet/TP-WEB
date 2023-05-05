@@ -52,7 +52,6 @@ class FiliereDAO {
                 method: 'POST',
                 body: datas
             });
-            console.log(response.ok);
         });
     }
 }

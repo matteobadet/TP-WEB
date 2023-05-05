@@ -7,20 +7,25 @@ class LogicielDAO{
     function __construct(Database $bdd){
         $this->bdd = $bdd;
     }
+    //Ce code renvoie la liste des logiciels
     public function GetAll(): array{
         return $this->bdd->queryAll("SELECT * FROM Logiciel",array());
     }
+    //Ce code renvoie la liste des logiciels en fonction d'une filière
     public function GetByFiliere(int $id) : array{
-        return $this->bdd->queryAll("SELECT ID,nom,version,urlsetup,comment,visible,Utilisateurlogin,type,urlPort,urlImage,obsolete FROM logiciel_filiere JOIN logiciel ON logiciel.ID = logiciel_filiere.LogicielID WHERE logiciel_filiere.FiliereID = ?",array($id));
+        return $this->bdd->queryAll("SELECT ID,nom,version,urlsetup,urltuto,comment,visible,Utilisateurlogin,type,urlPort,urlImage,obsolete FROM logiciel_filiere JOIN logiciel ON logiciel.ID = logiciel_filiere.LogicielID WHERE logiciel_filiere.FiliereID = ?",array($id));
     }
+    //Ce code supprime un logiciel
     public function Delete(int $id){
         $this->bdd->queryAll("DELETE FROM Logiciel WHERE ID=?",array($id));
     }
+    //Ce code renvoie un logiciel en fonction de son id
     public function GetLogicielByID(int $id){
         return $this->bdd->queryAll("SELECT * FROM Logiciel WHERE ID=?",array($id));
     }
+    //Ce codemet a jour un logiciel
     public function UpdateLogiciel(int $id,string $nom,string $version,string $type,bool $obsolete,string $urlSetup,string $urlTuto,string $urlPort,string $urlImage){
-        $this->bdd->queryAll("UPDATE Logiciel SET nom=?,version=?,type=?,obsolete=?,urlSetup=?,urlTuto=?,urlPort=?,urlImage=? WHERE id=?",array($nom,$version,$type,$obsolete,$urlSetup,$urlTuto,$urlPort,$urlImage,$id));
+        $this->bdd->queryAll("UPDATE Logiciel SET nom=?,version=?,type=?,obsolete=?,urlsetup=?,urltuto=?,urlPort=?,urlImage=? WHERE id=?",array($nom,$version,$type,$obsolete,$urlSetup,$urlTuto,$urlPort,$urlImage,$id));
         return true;
     }
 }

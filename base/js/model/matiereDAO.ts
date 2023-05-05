@@ -1,4 +1,8 @@
 class MatiereDAO {
+    /**
+     * methode qui renvoie la liste de toute les matières
+     * @returns la liste de matières
+     */
     public async getAll(): Promise<Array<Matiere>> {
         let matieres = new Array<Matiere>();
         let response = await fetch("php/matiere.php");
